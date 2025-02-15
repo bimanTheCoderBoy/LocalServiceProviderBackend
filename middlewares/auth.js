@@ -12,9 +12,7 @@ exports.authenticate = catchAsync(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
-  } else if (req.cookies?.jwt) {
-    token = req.cookies.jwt;
-  }
+  } 
 
   if (!token) {
     return next(new AppError('You are not logged in! Please log in to get access.', 401));
@@ -41,7 +39,7 @@ exports.authenticate = catchAsync(async (req, res, next) => {
 });
 
 exports.customerRoleAuthenticate=catchAsync(async (req,res,next)=>{
-    if(!req.user&&req.user.role=="customer"){
+    if(req.user&&req.user.role=="customer"){
         next();
     }else{
         next(new AppError('Not a valid user role to hit this API', 400))
@@ -49,7 +47,7 @@ exports.customerRoleAuthenticate=catchAsync(async (req,res,next)=>{
 })
 
 exports.providerRoleAuthenticate=catchAsync(async (req,res,next)=>{
-    if(!req.user&&req.user.role=="provider"){
+    if(req.user&&req.user.role=="provider"){
         next();
     }else{
         next(new AppError('Not a valid user role to hit this API', 400))

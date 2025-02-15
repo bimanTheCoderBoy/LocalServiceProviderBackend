@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const serviceSchema = new mongoose.Schema({
   provider: {
-    type: mongoose.Schema.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, 'Service must belong to a provider']
   },
@@ -13,7 +13,8 @@ const serviceSchema = new mongoose.Schema({
   description: String,
   price: {
     type: Number,
-    required: [true, 'Please enter service price']
+    required: [true, 'Please enter service price'],
+    min: [0, 'Price must be at least 0']
   },
   location: {
     type: {
@@ -38,5 +39,5 @@ const serviceSchema = new mongoose.Schema({
 });
 
 serviceSchema.index({ location: '2dsphere' });
-
+serviceSchema.index({ provider: 1 });
 module.exports = mongoose.model('Service', serviceSchema);

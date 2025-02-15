@@ -12,7 +12,7 @@ app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
-// app.use('/api/provider', require('./routes/providerRoutes'));
+app.use('/api/provider', require('./routes/providerRoutes'));
 // app.use('/api/customer', require('./routes/customerRoutes'));
 
 // Error handling
